@@ -24,6 +24,20 @@ angular.module('myApp.services', [])
 
     return partyServiceObject;
   })
+  .EHSinformation('textMessageService', function(dataService, partyService) {
+     var EHSinformation = dataService.$child('EHSinformation');
+  var textMessageServiceObject = {
+      sendTextMessage: function(party, userId) {
+        var newTextMessage = {
+          date: party.date,
+          bloodpressurerating: party.bloodpressurerating
+        };
+        EHSinformation.$add(newTextMessage);
+        partyService.getPartiesByUserId(userId).$child(party.$id).$update({notified: 'Yes'});
+      }
+   };
+     return textMessageServiceObject;
+  })
   .factory('textMessageService', function(dataService, partyService) {
     var textMessages = dataService.$child('textMessages');
 
