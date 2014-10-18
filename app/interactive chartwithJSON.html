@@ -7,16 +7,15 @@
   </title>
  <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
-  <script type="text/javascript">
+    <script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
+   <script type="text/javascript">
     google.load('visualization', '1.0', {packages: ['charteditor']});
   </script>
   <script type="text/javascript">
     google.setOnLoadCallback(drawChart);
-    var chartEditor = null;
+   // var chartEditor = null;
 function drawChart() {
-var data = new google.visualization.DataTable();
+ var data = new google.visualization.DataTable();
   data.addColumn('date', 'Visit Date');
   data.addColumn('number', 'Blood Pressure Reading');
   data.addRows([
@@ -26,17 +25,16 @@ var data = new google.visualization.DataTable();
     [ new Date(2014, 5, 20), 2],
     [ new Date(2014, 7, 28), 90]
   ]);
-/*[ new Date(2014, 6, 28), {v:7, f:'7.000'}]*/
 
+/*[ new Date(2014, 6, 28), {v:7, f:'7.000'}]*/
 /* var myView = google.visualization.DataView.fromJSON(data, viewAsJson) */
 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 chart.draw(data);
 //document.write(chart.toJSON());
-
-document.write(data);
-}
-
-   function drawChartwithJSON() {
+//document.write(data);
+};
+/*
+function drawChartwithJSON() {
 //connect to firebase db 
 var myDataRef = new Firebase('https://hblattnmkxd.firebaseio-demo.com/');
 //var fb = new Firebase("https://<your-firebase>.firebaseio.com");
@@ -47,7 +45,8 @@ var myDataRef = new Firebase('https://hblattnmkxd.firebaseio-demo.com/');
 
 //Getting one user data
 // new Firebase('https://example-data-sql.firebaseio.com/user/1').once('value', function(snap) {
-   console.log('I fetched a user!', snap.val());
+  
+// console.log('I fetched a user!', snap.val());
 });
 
 // Reading SQL data
@@ -60,18 +59,18 @@ var myDataRef = new Firebase('https://hblattnmkxd.firebaseio-demo.com/');
 //  var postInfo = snapshot.val();
 //  console.log(postInfo)
 //})
-      var jsonData = $.ajax({
+   /*   var jsonData = $.ajax({
           url: "getData.php",
           dataType:"json",
           async: false
           }).responseText;
-          
+    */      
       // Create our data table out of JSON data loaded from server.
-      var data = new google.visualization.DataTable(jsonData);
+/*      var data = new google.visualization.DataTable(jsonData);
       var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
       chart.draw(data);
     }
-
+*/
 /* {
     "cols": [
             {"type": "date", "id": "Visit Date",  "label": "Visit Date"}, 
