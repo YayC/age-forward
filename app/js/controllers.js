@@ -37,6 +37,7 @@ angular.module('myApp.controllers', [])
 
     // Method to register a new user using the authService.
     $scope.register = function() {
+      console.log('calling authService register')
       authService.register($scope.user);
     };
 
