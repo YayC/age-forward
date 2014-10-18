@@ -27,7 +27,7 @@ angular.module('myApp.services', [])
   .EHSinformation('textMessageService', function(dataService, partyService) {
      var EHSinformation = dataService.$child('EHSinformation');
   var textMessageServiceObject = {
-      sendTextMessage: function(party, userId) {
+      EHSinformation: function(party, userId) {
         var newTextMessage = {
           date: party.date,
           bloodpressurerating: party.bloodpressurerating
@@ -38,6 +38,7 @@ angular.module('myApp.services', [])
    };
      return textMessageServiceObject;
   })
+
   .factory('textMessageService', function(dataService, partyService) {
     var textMessages = dataService.$child('textMessages');
 
