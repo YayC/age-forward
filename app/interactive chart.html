@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>
+    Google Visualization API Sample
+  </title>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load('visualization', '1.0', {packages: ['charteditor']});
+  </script>
+  <script type="text/javascript">
+    google.setOnLoadCallback(drawChart);
+    var chartEditor = null;
+
+    function loadEditor() {
+      // Create the chart to edit.
+      var wrapper = new google.visualization.ChartWrapper({
+         'chartType':'LineChart',
+         'dataSourceUrl':'http://spreadsheets.google.com/tq?key=pCQbetd-CptGXxxQIG7VFIQ&pub=1',
+         'query':'SELECT A,D WHERE D > 100 ORDER BY D',
+         'options': {'title':'Population Density (people/km^2)', 'legend':'none'}
+      });
+
+      chartEditor = new google.visualization.ChartEditor();
+      google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
+      chartEditor.openDialog(wrapper, {});
+    }
+
+    // On "OK" save the chart to a <div> on the page.
+    function redrawChart(){
+      chartEditor.getChartWrapper().draw(document.getElementById('vis_div'));
+    }
+      function drawChart() {
+var data = new google.visualization.DataTable();
+  data.addColumn('date', 'Visit Date');
+  data.addColumn('number', 'Blood Pressure Reading');
+  data.addRows([
+    [ new Date(2014, 2, 09), 11],
+    [ new Date(2014, 3, 10), 2],
+    [ new Date(2014, 4, 15), 2],
+    [ new Date(2014, 5, 20), 2],
+    [ new Date(2014, 7, 28), 90]
+  ]);
+/*[ new Date(2014, 6, 28), {v:7, f:'7.000'}]*/
+
+/* var myView = google.visualization.DataView.fromJSON(data, viewAsJson) */
+var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+chart.draw(data);
+document.write(chart.toJSON());
+}
+  </script>
+</head>
+<body>
+   <div id="chart_div" style="width: 900px; height: 500px;"></div>
+</body>
+</html>

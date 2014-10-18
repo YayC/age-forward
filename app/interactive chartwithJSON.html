@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>
+    Personal Record Information Report 
+  </title>
+ <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
+  <script type="text/javascript">
+    google.load('visualization', '1.0', {packages: ['charteditor']});
+  </script>
+  <script type="text/javascript">
+    google.setOnLoadCallback(drawChart);
+    var chartEditor = null;
+function drawChart() {
+var data = new google.visualization.DataTable();
+  data.addColumn('date', 'Visit Date');
+  data.addColumn('number', 'Blood Pressure Reading');
+  data.addRows([
+    [ new Date(2014, 2, 09), 11],
+    [ new Date(2014, 3, 10), 2],
+    [ new Date(2014, 4, 15), 2],
+    [ new Date(2014, 5, 20), 2],
+    [ new Date(2014, 7, 28), 90]
+  ]);
+/*[ new Date(2014, 6, 28), {v:7, f:'7.000'}]*/
+
+/* var myView = google.visualization.DataView.fromJSON(data, viewAsJson) */
+var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+chart.draw(data);
+//document.write(chart.toJSON());
+
+document.write(data);
+}
+
+   function drawChartwithJSON() {
+//connect to firebase db 
+var myDataRef = new Firebase('https://hblattnmkxd.firebaseio-demo.com/');
+//var fb = new Firebase("https://<your-firebase>.firebaseio.com");
+// Read entire data once
+// dataRef.once('value', function(data) {
+  // do some stuff once
+//});
+
+//Getting one user data
+// new Firebase('https://example-data-sql.firebaseio.com/user/1').once('value', function(snap) {
+   console.log('I fetched a user!', snap.val());
+});
+
+// Reading SQL data
+// Get a reference to our posts
+//var postsRef = new Firebase("https://docs-examples.firebaseio.com/web/saving-data/fireblog/posts");
+// Write our query
+//var postsQuery = postsRef.limit(10);
+// Get the 10 latest posts
+//postsQuery.on('child_added', function (snapshot) {
+//  var postInfo = snapshot.val();
+//  console.log(postInfo)
+//})
+      var jsonData = $.ajax({
+          url: "getData.php",
+          dataType:"json",
+          async: false
+          }).responseText;
+          
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+      chart.draw(data);
+    }
+
+/* {
+    "cols": [
+            {"type": "date", "id": "Visit Date",  "label": "Visit Date"}, 
+            {"type": "number", "id": "Blood Pressure Reading", "label": "Blood Pressure Reading"}
+        ], 
+    "rows": [
+            {"c": [{"v": "2011"}, {"v": "1860"}]}, 
+            {"c": [{"v": "2012"}, {"v": "2000"}]}
+        ]
+}
+
+*/
+
+  </script>
+</head>
+<body>
+   <div id="chart_div" style="width: 900px; height: 500px;"></div>
+</body>
+</html> 
+
+
+
+
+
