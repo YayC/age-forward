@@ -4,55 +4,70 @@
 
 angular.module('myApp.services', [])
   .value('FIREBASE_URL', 'https://agefwd.firebaseio.com/')
-  .factory('dataService', function($firebase, FIREBASE_URL) {
-    var dataRef = new Firebase(FIREBASE_URL);
-    var fireData = $firebase(dataRef);
-
-    return fireData;
+  .factory('getFirebaseStore', function($firebase, FIREBASE_URL) {
+    var getFirebaseStore = function(path){
+      path = typeof path !== 'undefined' ? path : '';
+      var dataRef = new Firebase(FIREBASE_URL + path);
+      return $firebase(dataRef);
+    }
+    return getFirebaseStore
   })
-  .factory('partyService', function(dataService) {
-    var users = dataService.$child('users');
+  .factory('patientService', function(getFirebaseStore) {
+    var patients = getFirebaseStore('patients').$asArray;
 
-    var partyServiceObject = {
-      saveParty: function(party, userId) {
-        users.$child(userId).$child('parties').$add(party);
+    var patientServiceObject = {
+      savePatient: function(patient) {
+       patients.$add(patient);
       },
-      getPartiesByUserId: function(userId) {
-        return users.$child(userId).$child('parties');
+      getPatientByUserId: function(userId) {
+        // var patient = patients(userId) ? patients(userId) : {name: 'Jan Garman'};
+        // debugger
+        // return patient;
+        return {name: 'Jan Garman', caregiverCell: '+13104300717', gender: 'Female', photo: "http://mchenrychamber.com/wp-content/uploads/2013/04/generic-profile.jpg"};
       }
     };
 
-    return partyServiceObject;
+    return patientServiceObject;
   })
-  .factory('textMessageService', function(dataService, partyService) {
-    var textMessages = dataService.$child('textMessages');
+  .factory('visitService', function(getFirebaseStore) {
+    // var users = getFirebaseStore('users').$asArray;
+    var visits = getFirebaseStore('visits').$asArray;
+    var visitServiceObject = {
+      saveVisit: function(visit, userId) {
+        visits.$add(visit);
+      },
+      getVisitsByUserId: function(userId) {
+        // return users.$child(userId).$child('visits');
+        return visits;
+      }
+    };
+
+    return visitServiceObject;
+  })
+  .factory('textMessageService', function(getFirebaseStore) {
+    var textMessages = getFirebaseStore('textMessages');
 
     var textMessageServiceObject = {
-      sendTextMessage: function(party, userId) {
-        var newTextMessage = {
-          phoneNumber: party.phone,
-          size: party.size,
-          name: party.name
-        };
-        textMessages.$add(newTextMessage);
-        partyService.getPartiesByUserId(userId).$child(party.$id).$update({notified: 'Yes'});
+      sendTextMessage: function(phoneNumber, message) {
+        textMessages.$add({phoneNumber: phoneNumber, message: message});
+        // partyService.getPartiesByUserId(userId).$child(party.$id).$update({notified: 'Yes'});
       }
     };
 
     return textMessageServiceObject;
   })
-  .factory('authService', function($firebaseSimpleLogin, $location, $rootScope, FIREBASE_URL, dataService) {
+  .factory('authService', function($firebaseSimpleLogin, $location, $rootScope, FIREBASE_URL, getFirebaseStore) {
     var authRef = new Firebase(FIREBASE_URL);
     var auth = $firebaseSimpleLogin(authRef);
-    var emails = dataService.$child('emails');
+
 
     var authServiceObject = {
       register: function(user) {
-        console.log('in register')
         auth.$createUser(user.email, user.password).then(function(data) {
           console.log(data);
           authServiceObject.login(user, function(){
-            emails.$add({email: user.email});
+            var emails = getFirebaseStore('emails').$asArray();
+            emails.$add({email: user.email, userId: user.id});
           });
         });
       },
@@ -62,7 +77,7 @@ angular.module('myApp.services', [])
           if(optionalCallback){
             optionalCallback();
           }
-          $location.path('/waitlist');
+          $location.path('/1/visits');
         });
       },
       logout: function() {
@@ -83,4 +98,33 @@ angular.module('myApp.services', [])
     });
 
     return authServiceObject;
-  });
+  })
+  .factory('speechService', function () {
+
+        if(window.speechSynthesis) {
+            var msg = new SpeechSynthesisUtterance();
+
+            //calling get voices method first scaffolds it for
+            //use in say method
+            window.speechSynthesis.getVoices();
+        }
+
+        function sayIt(text, config) {
+            var voices = window.speechSynthesis.getVoices();
+            //choose voice. Fallback to default
+            msg.voice = config && config.voiceIndex ? voices[config.voiceIndex] : voices[0];
+            msg.volume = config && config.volume ? config.volume : 1;
+            msg.rate = config && config.rate ? config.rate : 1;
+            msg.pitch = config && config.pitch ? config.pitch : 1;
+
+            //message for speech
+            msg.text = text;
+
+            speechSynthesis.speak(msg);
+        }
+
+
+        return {
+            sayText: sayIt
+        };
+    });

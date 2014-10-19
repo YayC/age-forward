@@ -1,5 +1,9 @@
 'use strict';
 
+var lodash = angular.module('lodash', []);
+lodash.factory('_', function() {
+  return window._; // must already be loaded on the page
+});
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp', [
@@ -8,16 +12,17 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.directives',
   'myApp.controllers',
-  'firebase'
+  'firebase',
+  'lodash'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
     templateUrl: 'partials/landing_page.html',
     controller: 'LandingPageController'
   });
-  $routeProvider.when('/waitlist', {
-    templateUrl: 'partials/waitlist.html',
-    controller: 'WaitlistController'
+  $routeProvider.when('/:userId/dashboard', {
+    templateUrl: 'partials/dashboard.html',
+    controller: 'DashboardController'
   });
   $routeProvider.when('/register', {
     templateUrl: 'partials/register.html',
@@ -27,5 +32,9 @@ config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/login.html',
     controller: 'AuthController'
   });
+  // $routeProvider.when('/dashboard', {
+  //   templateUrl: 'partials/dashboard.html',
+  //   controller: 'DashboardController'
+  // });
   $routeProvider.otherwise({redirectTo: '/'});
 }]);

@@ -15,3 +15,11 @@ body {
 .party-form {
     margin-bottom: 20px;
 }
+
+.option-link {
+  position: relative;
+  bottom: 8px;
+}
+.option-link:hover {
+  cursor: pointer;
+}

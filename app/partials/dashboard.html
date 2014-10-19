@@ -1,0 +1,70 @@
+<div class='row'>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <h1>{{patient.name}} / Dashboard</h1>
+    <br>
+    &nbsp;&nbsp;&nbsp;<button ng-click="saySummary()" type="button" class="btn btn-primary btn-lg"><i class="fa fa-play-circle"></i>  Audio Summary</button> <i class="fa fa-cog option-link"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button ng-click="showVisitForm = !showVisitForm" type="button" class="btn btn-success btn-lg"><i class="fa fa-plus-square"></i>  New Interaction</button>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
+    <img src="http://mchenrychamber.com/wp-content/uploads/2013/04/generic-profile.jpg">
+  </div>
+</div>
+<br>
+<form ng-submit="completeVisit()" ng-show="showVisitForm" role="form">
+  <!-- <div class="form-group"> -->
+    <label class="sr-only" for="visitNote">Visit Summary</label>
+    <textarea ng-model="newVisit.visitNote" type="text" class="form-control" placeholder="Notes on the visit..."></textarea>
+  <!-- </div> -->
+  <!-- <div class="form-group">
+    <label class="sr-only" for="phoneNumber">Phone number</label>
+    <input ng-model="newParty.phone" type="text" class="form-control" id="phoneNumber" placeholder="Phone">
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="sizeOfParty">Size of party</label>
+    <input ng-model="newParty.size" type="text" class="form-control" id="sizeOfParty" placeholder="Size of party">
+  </div> -->
+  <br>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<!-- <table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>Visit Note</th>
+    <th>Info</th>
+    <th>Notified?</th>
+    <th>Done</th>
+  </tr>
+  </thead>
+  <tr ng-repeat="visit in visits">
+    <td><input type="checkbox" ng-model="party.done" ng-change="parties.$save(party.$id)"></td>
+    <td>
+      <div><strong>{{ party.name }} ({{ party.size }} people)</strong></div>
+      <div>{{ party.phone }}</div>
+      <div>
+      </div>
+    </td>
+    <td>
+      <div>
+        {{ party.notified }}
+      </div>
+    </td>
+    <td>
+      <button ng-click="completeVisit(visit)" type="submit" class="btn btn-success">Complete Visit</button>
+      <button ng-click="parties.$remove(party.$id)" type="submit" class="btn btn-danger">Remove</button>
+    </td>
+  </tr>
+</table> -->
+
+<script type="text/ng-template" id="textToSpeechOptions.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Voice Options</h3>
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
