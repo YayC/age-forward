@@ -13,7 +13,7 @@
     <img src="https://s3.amazonaws.com/agefwd/jan_photo.png">
   </div>
 </div>
-<form ng-submit="completeVisit()" ng-show="showVisitForm" role="form">
+<form ng-submit="completeVisit($scope.newVisit)" ng-show="showVisitForm" role="form">
   <!-- <div class="form-group"> -->
     <label class="sr-only" for="visitNote">Visit Summary</label>
     <textarea ng-model="newVisit.visitNote" type="text" class="form-control" placeholder="Notes on the visit..."></textarea>

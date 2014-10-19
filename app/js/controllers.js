@@ -55,7 +55,8 @@ angular.module('myApp.controllers', [])
     };
 
     // Function to send a text message to a party.
-    $scope.completeVisit = function(visit) {
+    $scope.completeVisit = function() {
+      var visit = $scope.newVisit;
       $scope.saveVisit();
       $scope.showVisitForm = false;
       // visitService.getVisitsByUserId(userId).$child(visit.$id).$update({completedAt: new Date()});
