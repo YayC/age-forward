@@ -24,13 +24,14 @@ angular.module('myApp.services', [])
 
     return partyServiceObject;
   })
+// schema :  Date  and BloodPressure value
   .EHSinformation('textMessageService', function(dataService, partyService) {
-     var EHSinformation = dataService.$child('EHSinformation');
+     var EHSinformation = dataService.$child('medicalRecord');
   var textMessageServiceObject = {
       EHSinformation: function(party, userId) {
         var newTextMessage = {
           date: party.date,
-          bloodpressurerating: party.bloodpressurerating
+          bloodPressures: party.bloodPressures
         };
         EHSinformation.$add(newTextMessage);
         partyService.getPartiesByUserId(userId).$child(party.$id).$update({notified: 'Yes'});
@@ -38,6 +39,22 @@ angular.module('myApp.services', [])
    };
      return textMessageServiceObject;
   })
+// schema :  Date  and Weight value
+  .pushWeightinformation('textMessageService', function(dataService, partyService) {
+     var EHSinformation = dataService.$child('weightRecords');
+  var textMessageServiceObject = {
+      EHSinformation: function(party, userId) {
+        var newTextMessage = {
+          Date: party.Date,
+          weightRecord: party.weightRecord
+        };
+        EHSinformation.$add(newTextMessage);
+        partyService.getPartiesByUserId(userId).$child(party.$id).$update({notified: 'Yes'});
+      }
+   };
+     return textMessageServiceObject;
+  })
+
 
   .factory('textMessageService', function(dataService, partyService) {
     var textMessages = dataService.$child('textMessages');
