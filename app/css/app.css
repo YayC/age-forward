@@ -27,3 +27,7 @@ body {
 .container.ng-scope{
   background-image: url('img/Splash Page.gif');
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

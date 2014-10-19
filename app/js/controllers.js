@@ -6,7 +6,7 @@ angular.module('myApp.controllers', [])
   .controller('LandingPageController', [function() {
 
   }])
-  .controller('DashboardController', ['$scope', 'patientService', 'visitService', 'textMessageService', 'authService', '$routeParams', 'speechService', function($scope, patientService, visitService, textMessageService, authService, $routeParams, speechService) {
+  .controller('DashboardController', ['$scope', 'patientService', 'visitService', 'textMessageService', 'authService', '$routeParams', 'speechService', '_', function($scope, patientService, visitService, textMessageService, authService, $routeParams, speechService, _) {
 
     // Bind user's parties to $scope.parties.
     // authService.getCurrentUser().then(function(user) {
@@ -60,9 +60,18 @@ angular.module('myApp.controllers', [])
     //   $modalInstance.dismiss('cancel');
     // };
 
+    $scope.speaking = window.speechSynthesis.speaking;
 
+    $scope.stopSpeaking = function(){
+      window.speechSynthesis.cancel()
+    }
 
-    $scope.summaryText = "Jan has no new reported hospitalizations since your last visit on September 19th. Vitals, including 21 Glucose readings and 5 blood pressure readings, were all within normal limits. Note from daughter Kim on September 25th:. quote. just spoke with mom, she forgot to mention a new blood thinner she's taking. I'm also worried that she's not getting out as much recently. Thanks Kim, you're an angel. end quote."
+    $scope.summaryText = [
+      "Jan has no new reported hospitalizations since your last visit on September 19th.",
+      "Vitals, including 21 Glucose readings and 5 blood pressure readings, were all within normal limits.",
+      "Note from daughter Kim on September 25th:. quote. just spoke with mom, she forgot to mention a new blood thinner she's taking.",
+      "I'm also worried that she's not getting out as much recently. Thanks Kim, you're an angel. end quote."
+    ]
 
     $scope.voices = [
       {name: "US English Accent"},
@@ -118,7 +127,11 @@ angular.module('myApp.controllers', [])
     $scope.saySummary = function(){
       $scope.setVoiceOptions();
       if(window.speechSynthesis) {
-          speechService.sayText($scope.summaryText, $scope.config);
+        speechService.sayText($scope.summaryText, $scope.config);
+        // _($scope.summaryText).each(function(sentence){
+        //   setTimeout(function(){speechService.sayText(sentence, $scope.config);}, 10)
+
+        // })
       } else {
         alert('Sorry, speech not supported for this device');
       }

@@ -2,7 +2,8 @@
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     <h1>{{patient.name}} / Dashboard</h1>
     <br>
-    &nbsp;&nbsp;&nbsp;<button ng-click="saySummary()" type="button" class="btn btn-primary btn-lg"><i class="fa fa-play-circle"></i>  Audio Summary</button> <i class="fa fa-cog option-link"></i>
+    &nbsp;&nbsp;&nbsp;<span ng-hide="speaking"><button ng-click="saySummary()" type="button" class="btn btn-primary btn-lg"><i class="fa fa-play-circle"></i>  Audio Summary</button> <i class="fa fa-cog option-link"></i></span>
+    <button ng-show="speaking" ng-click="stopSpeaking()" class="btn btn-danger btn-lg"><i class="fa fa-stop"></i></button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button ng-click="showVisitForm = !showVisitForm" type="button" class="btn btn-success btn-lg"><i class="fa fa-plus-square"></i>  New Interaction</button>
   </div>
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
