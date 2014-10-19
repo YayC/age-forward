@@ -13,8 +13,84 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1.0', {packages: ['charteditor']});
+    </script>
+      <script type="text/javascript">
+        google.setOnLoadCallback(drawChart);
+        var chartEditor = null;
+
+        function loadEditor() {
+          // Create the chart to edit.
+          var wrapper = new google.visualization.ChartWrapper({
+             'chartType':'LineChart',
+             'dataSourceUrl':'http://spreadsheets.google.com/tq?key=pCQbetd-CptGXxxQIG7VFIQ&pub=1',
+             'query':'SELECT A,D WHERE D > 100 ORDER BY D',
+             'options': {'title':'Population Density (people/km^2)', 'legend':'none'}
+          });
+
+          chartEditor = new google.visualization.ChartEditor();
+          google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
+          chartEditor.openDialog(wrapper, {});
+        }
+
+        // On "OK" save the chart to a <div> on the page.
+        function redrawChart(){
+          chartEditor.getChartWrapper().draw(document.getElementById('vis_div'));
+        }
+          function drawChart() {
+    var data = new google.visualization.DataTable();
+      data.addColumn('date', 'Visit Date');
+      data.addColumn('number', 'Blood Pressure Reading');
+      data.addRows([
+        [ new Date(2014, 2, 09), 120],
+        [ new Date(2014, 3, 10), 90],
+        [ new Date(2014, 4, 15), 140],
+        [ new Date(2014, 5, 20), 150],
+        [ new Date(2014, 7, 28), 90]
+      ]);
+    /*[ new Date(2014, 6, 28), {v:7, f:'7.000'}]*/
+
+    /* var myView = google.visualization.DataView.fromJSON(data, viewAsJson) */
+    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+    chart.draw(data);
+    //document.write(chart.toJSON());
+    drawChart2();
+    }
+    function drawChart2() {
+
+         var data = google.visualization.arrayToDataTable([
+             ['Date TimeStamp', 'Weight Information ', { role: 'style' }],
+             ['January 2014', 65, '#b87333'],            // RGB value
+             ['May 2014', 60, 'silver'],            // English color name
+             ['July 2014', 61, 'gold'],
+
+           ['August 2014', 55, 'color: #F5e4e2' ], // CSS-style declaration
+          ]);
+     //var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+    chart.draw(data);
+    //drawChart3();
+    }
+   /* function drawChart3()
+    {
+    // Create the three charts: before, after, and diff.
+    var chartBefore = new google.visualization.ScatterChart(document.getElementById('chart_div3'));
+    //var chartAfter = new google.visualization.ScatterChart(document.getElementById('chart_after_div'));
+    //var chartDiff = new google.visualization.ScatterChart(document.getElementById('chart_diff_div'));
+
+    // Draw the before and after charts.
+    chartBefore.draw(chartBefore);
+    }*/
+    </script>
 </head>
 <body>
+
+
+
+
 
   <!--Navbar that stays on the top of every page.-->
   <div ng-controller="AuthController" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -46,6 +122,76 @@
 
   <!--Main content that changes based on route.-->
   <div ng-view class="container"></div>
+  <!-- <h1> Patient Information for Jan Garman</h1> -->
+  <div ng-hide="onDashboard"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
+  <div>
+    <div class="row">
+       <div id="chart_div" class="col-xs-12 col-md-8" style="width: 900px; height: 250px;"></div>
+      <div class="col-xs-6 col-md-4">
+     <div class="row">
+        <div class="col-md-6">
+
+    <br/>
+    <br/>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>SNO</th>
+                    <th>Medication Name</th>
+                    <th>Date</th>
+                    <th>Subscribed By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Acticin</td>
+                    <td>05/06/2014</td>
+                    <td>Kim</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Nadolol</td>
+                    <td>07/07/2014</td>
+                    <td>Lisa</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>08/28/2014</td>
+                    <td>Linda</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+    </div>
+    </div>
+    <div class="row">
+    <div id="chart_div2" class="col-xs-12 col-md-8" style="width: 900px; height: 300px;"></div>
+      <div class="col-xs-6 col-md-4" id="chart_div3" style="width:400px;">
+
+    <br/>
+    <br/>
+    <table class="table">
+    <thead>
+                  <tr>
+        <th>SNO</th>
+                    <th>Key Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Went to LeadingAge hackfest this weekend</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Angerness</td>
+                  </tr>
+     </div>
+    </div>
+    </div>
+  </div>
   <!-- Lodash -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.compat.min.js"></script>
   <!-- AngularJS -->
@@ -68,5 +214,6 @@
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap.min.js"></script>
+
 </body>
 </html>

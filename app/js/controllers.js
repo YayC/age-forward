@@ -3,10 +3,10 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('LandingPageController', [function() {
-
+  .controller('LandingPageController', ['$rootScope', function($rootScope) {
+    $rootScope.onDashboard = false;
   }])
-  .controller('DashboardController', ['$scope', 'patientService', 'visitService', 'textMessageService', 'authService', '$routeParams', 'speechService', '_', function($scope, patientService, visitService, textMessageService, authService, $routeParams, speechService, _) {
+  .controller('DashboardController', ['$rootScope', '$scope', 'patientService', 'visitService', 'textMessageService', 'authService', '$routeParams', 'speechService', '_', function($rootScope, $scope, patientService, visitService, textMessageService, authService, $routeParams, speechService, _) {
 
     // Bind user's parties to $scope.parties.
     // authService.getCurrentUser().then(function(user) {
@@ -14,6 +14,11 @@ angular.module('myApp.controllers', [])
     //     $scope.visits = visitService.getVisitsByUserId(user.id);
     //   };
     // });
+
+
+
+
+    $rootScope.onDashboard = true;
     $scope.subjectUserId = $routeParams["userId"];
     $scope.visits = visitService.getVisitsByUserId($scope.subjectUserId);
     $scope.patient = patientService.getPatientByUserId($scope.subjectUserId);
