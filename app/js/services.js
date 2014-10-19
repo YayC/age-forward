@@ -77,7 +77,7 @@ angular.module('myApp.services', [])
           if(optionalCallback){
             optionalCallback();
           }
-          $location.path('/1/visits');
+          $location.path('/1/dashboard');
         });
       },
       logout: function() {
