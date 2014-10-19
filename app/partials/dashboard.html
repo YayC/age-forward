@@ -10,7 +10,25 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button ng-click="showVisitForm = !showVisitForm" type="button" class="btn btn-success btn-lg"><i class="fa fa-plus-square"></i>  New Interaction</button>
   </div>
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
-    <img src="https://s3.amazonaws.com/agefwd/jan_photo.png">
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <img src="https://s3.amazonaws.com/agefwd/jan_photo.png">
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div>
+          <div class="map-wrapper">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom">
+              <ui-gmap-marker coords="map.center" options="marker.options" events="marker.events" idkey="marker.id">
+              </ui-gmap-marker>
+            </ui-gmap-google-map>
+          </div>
+          <br>
+          Jan's phone: <a href="+112345678910">+112345678910</a><br>
+          Emergency Contact: <a href="tel:{{patient.caregiverCell}}">{{patient.caregiverCell}}</a>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 <form ng-submit="completeVisit($scope.newVisit)" ng-show="showVisitForm" role="form">

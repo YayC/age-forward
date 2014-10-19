@@ -13,7 +13,8 @@ angular.module('myApp', [
   'myApp.directives',
   'myApp.controllers',
   'firebase',
-  'lodash'
+  'lodash',
+  'uiGmapgoogle-maps'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {

@@ -36,3 +36,11 @@ body {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+.map-wrapper{
+  /*background-color: red;*/
+  height: 146px;
+  width: 230px;
+}
+
+.angular-google-map-container { height: 146px; }

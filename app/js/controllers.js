@@ -67,6 +67,43 @@ angular.module('myApp.controllers', [])
 
 
 
+    //Map
+    $scope.map = {
+        center: {
+            latitude: 45,
+            longitude: -73
+        },
+        zoom: 8
+    };
+    $scope.marker = {
+          id: 0,
+          coords: {
+            latitude: 45,
+            longitude: -73
+          },
+          options: { draggable: true },
+          events: {
+            dragend: function (marker, eventName, args) {
+              var lat = marker.getPosition().lat();
+              var lon = marker.getPosition().lng();
+
+              $scope.marker.options = {
+                draggable: true,
+                labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+                labelAnchor: "100 0",
+                labelClass: "marker-labels"
+              };
+            }
+          }
+        };
+    // $scope.marker = {};
+    // $scope.marker.options = {
+    //             draggable: true,
+    //             labelContent: "lat: " + $scope.map.center.latitude + ' ' + 'lon: ' + $scope.map.longitude,
+    //             labelAnchor: "100 0",
+    //             labelClass: "marker-labels"
+    //           };
+
     //// text to speech
     // $scope.openSpeechOptions = function () {
 
