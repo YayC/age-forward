@@ -59,7 +59,7 @@ angular.module('myApp.controllers', [])
       $scope.saveVisit();
       $scope.showVisitForm = false;
       // visitService.getVisitsByUserId(userId).$child(visit.$id).$update({completedAt: new Date()});
-      var message = $scope.patient.name + "'s visit is complete and the summary is available online at:";
+      var message = $scope.patient.name + "'s visit is complete and the summary is available online: " + visit.visitNote;
       textMessageService.sendTextMessage($scope.patient.caregiverCell, message);
       $scope.alertSuccess('Successfully uploaded!');
     };
