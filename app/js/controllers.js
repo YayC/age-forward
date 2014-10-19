@@ -6,7 +6,7 @@ angular.module('myApp.controllers', [])
   .controller('LandingPageController', ['$rootScope', function($rootScope) {
     $rootScope.onDashboard = false;
   }])
-  .controller('DashboardController', ['$rootScope', '$scope', 'patientService', 'visitService', 'textMessageService', 'authService', '$routeParams', 'speechService', '_', function($rootScope, $scope, patientService, visitService, textMessageService, authService, $routeParams, speechService, _) {
+  .controller('DashboardController', ['$rootScope', '$scope', 'patientService', 'visitService', 'textMessageService', 'authService', '$routeParams', 'speechService', '$timeout', '_', function($rootScope, $scope, patientService, visitService, textMessageService, authService, $routeParams, speechService, $timeout, _) {
 
     // Bind user's parties to $scope.parties.
     // authService.getCurrentUser().then(function(user) {
@@ -19,13 +19,34 @@ angular.module('myApp.controllers', [])
 
 
     $rootScope.onDashboard = true;
-    $scope.subjectUserId = $routeParams["userId"];
+    $scope.subjectUserId = $routeParams["userId"] !== 'undefined' ? $routeParams["userId"] : "";;
     $scope.visits = visitService.getVisitsByUserId($scope.subjectUserId);
     $scope.patient = patientService.getPatientByUserId($scope.subjectUserId);
     $scope.showVisitForm = false;
+    $scope.author = typeof $scope.currentUser !== 'undefined' ? $scope.currentUser : "";
+
+    // Alerts
+    //
+    $scope.fadingSuccessAlert = false;
+    $scope.doFade = false;
+
+    $scope.alertSuccess = function(msg){
+
+      //reset
+      $scope.fadingSuccessAlert = false;
+      $scope.doFade = false;
+
+      $scope.fadingSuccessAlert = true;
+
+      $scope.alertMessage = msg;
+
+      $timeout(function(){
+        $scope.doFade = true;
+      }, 2500);
+    };
 
     // Object to store data from the waitlist form.
-    $scope.newVisit = {visitNote: '', authorUserId: $scope.currentUser, scheduledStart: '', completedAt: '', subjectUserId: $scope.subjectUserId};
+    $scope.newVisit = {visitNote: '', authorUserId: $scope.author, scheduledStart: '', completedAt: '', subjectUserId: $scope.subjectUserId};
 
     // Function to save a new party to the waitlist.
     $scope.saveVisit = function() {
@@ -36,9 +57,11 @@ angular.module('myApp.controllers', [])
     // Function to send a text message to a party.
     $scope.completeVisit = function(visit) {
       $scope.saveVisit();
+      $scope.showVisitForm = false;
       // visitService.getVisitsByUserId(userId).$child(visit.$id).$update({completedAt: new Date()});
       var message = $scope.patient.name + "'s visit is complete and the summary is available online at:";
       textMessageService.sendTextMessage($scope.patient.caregiverCell, message);
+      $scope.alertSuccess('Successfully uploaded!');
     };
 
 
@@ -141,6 +164,8 @@ angular.module('myApp.controllers', [])
         alert('Sorry, speech not supported for this device');
       }
     }
+
+
   }])
   .controller('AuthController', ['$scope', 'authService', function($scope, authService) {
 

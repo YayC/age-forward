@@ -32,7 +32,7 @@ angular.module('myApp.services', [])
 // <<<<<<< HEAD
   .factory('visitService', function(getFirebaseStore) {
     // var users = getFirebaseStore('users').$asArray;
-    var visits = getFirebaseStore('visits').$asArray;
+    var visits = getFirebaseStore('visits').$asArray();
     var visitServiceObject = {
       saveVisit: function(visit, userId) {
         visits.$add(visit);
@@ -46,7 +46,7 @@ angular.module('myApp.services', [])
     return visitServiceObject;
   })
   .factory('textMessageService', function(getFirebaseStore) {
-    var textMessages = getFirebaseStore('textMessages');
+    var textMessages = getFirebaseStore('textMessages').$asArray();
 // =======
 // // schema :  Date  and BloodPressure value
 //   .EHSinformation('textMessageService', function(dataService) {

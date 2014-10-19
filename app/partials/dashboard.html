@@ -1,3 +1,4 @@
+<div data-ng-show="fadingSuccessAlert" ng-class="{fade:doFade}" class="alert alert-success">{{alertMessage}}</div>
 <div class='row'>
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     <h1>{{patient.name}} / Dashboard</h1>
@@ -12,10 +13,6 @@
     <img src="https://s3.amazonaws.com/agefwd/jan_photo.png">
   </div>
 </div>
-<audio controls>
-  <source src="https://api.twilio.com/2010-04-01/Accounts/ACc14e9f367ba0ea0f9a2f1d9fbf462f3b/Recordings/REc0d232cf8c5cbd552cedd1a20ba399df" type="audio/ogg">
-Your browser does not support the audio element.
-</audio>
 <form ng-submit="completeVisit()" ng-show="showVisitForm" role="form">
   <!-- <div class="form-group"> -->
     <label class="sr-only" for="visitNote">Visit Summary</label>
@@ -23,7 +20,14 @@ Your browser does not support the audio element.
   <!-- </div> -->
   <br>
   <button type="submit" class="btn btn-primary">Save</button>
+  <br>
+  <br>
 </form>
+<audio controls>
+  <source src="https://api.twilio.com/2010-04-01/Accounts/ACc14e9f367ba0ea0f9a2f1d9fbf462f3b/Recordings/REc0d232cf8c5cbd552cedd1a20ba399df" type="audio/ogg">
+Your browser does not support the audio element.
+</audio>
+
 
 
 <script type="text/ng-template" id="textToSpeechOptions.html">
