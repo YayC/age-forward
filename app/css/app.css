@@ -18,7 +18,12 @@ body {
 
 .option-link {
   position: relative;
-  bottom: 8px;
+
+}
+.super {bottom: 8px;}
+.sub {
+  top: 15px;
+  right: 15px;
 }
 .option-link:hover {
   cursor: pointer;
