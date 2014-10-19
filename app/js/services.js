@@ -29,6 +29,7 @@ angular.module('myApp.services', [])
 
     return patientServiceObject;
   })
+// <<<<<<< HEAD
   .factory('visitService', function(getFirebaseStore) {
     // var users = getFirebaseStore('users').$asArray;
     var visits = getFirebaseStore('visits').$asArray;
@@ -46,6 +47,40 @@ angular.module('myApp.services', [])
   })
   .factory('textMessageService', function(getFirebaseStore) {
     var textMessages = getFirebaseStore('textMessages');
+// =======
+// // schema :  Date  and BloodPressure value
+//   .EHSinformation('textMessageService', function(dataService) {
+//      var EHSinformation = dataService.$child('medicalRecord');
+//   var textMessageServiceObject = {
+//       EHSinformation: function(party, userId) {
+//         var newTextMessage = {
+//           date: party.date,
+//           bloodPressures: party.bloodPressures
+//         };
+//         EHSinformation.$add(newTextMessage);
+//       }
+//    };
+//      return textMessageServiceObject;
+//   })
+// // schema :  Date  and Weight value
+//   .pushWeightinformation('textMessageService', function(dataService) {
+//      var EHSinformation = dataService.$child('weightRecords');
+//      var textMessageServiceObject = {
+//       EHSinformation: function(party, userId) {
+//         var newTextMessage = {
+//           Date: party.Date,
+//           weightRecord: party.weightRecord
+//         };
+//         EHSinformation.$add(newTextMessage);
+//       }
+//    };
+//      return textMessageServiceObject;
+//   })
+
+
+//   .factory('textMessageService', function(dataService, partyService) {
+//     var textMessages = dataService.$child('textMessages');
+// >>>>>>> 5f79f57b62cfbc82181d5be479e32f58fb23d3be
 
     var textMessageServiceObject = {
       sendTextMessage: function(phoneNumber, message) {

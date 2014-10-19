@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" href="./css/bootstrap/css/bootstrap.css" >
   <title>
     Google Visualization API Sample
   </title>
@@ -47,11 +48,106 @@ var data = new google.visualization.DataTable();
 /* var myView = google.visualization.DataView.fromJSON(data, viewAsJson) */
 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 chart.draw(data);
-document.write(chart.toJSON());
+//document.write(chart.toJSON()); 
+drawChart2();
+}
+function drawChart2() {
+
+     var data = google.visualization.arrayToDataTable([
+         ['Date TimeStamp', 'Weight Information ', { role: 'style' }],
+         ['January 2014', 65, '#b87333'],            // RGB value
+         ['May 2014', 60, 'silver'],            // English color name
+         ['July 2014', 61, 'gold'],
+
+       ['August 2014', 55, 'color: #F5e4e2' ], // CSS-style declaration
+      ]);
+ //var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+var chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+chart.draw(data);
+drawChart3();
+}
+function drawChart3()
+{
+// Create the three charts: before, after, and diff.
+var chartBefore = new google.visualization.ScatterChart(document.getElementById('chart_div3'));
+//var chartAfter = new google.visualization.ScatterChart(document.getElementById('chart_after_div'));
+//var chartDiff = new google.visualization.ScatterChart(document.getElementById('chart_diff_div'));
+
+// Draw the before and after charts.
+chartBefore.draw(oldData);
 }
   </script>
 </head>
 <body>
-   <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+<div class="row">
+   <div id="chart_div" class="col-xs-12 col-md-8" style="width: 900px; height: 500px;"></div>
+  <div class="col-xs-6 col-md-4">
+ <div class="row">
+        <div class="col-md-6">
+<br/>
+<br/>
+<br/>
+<br/>
+<div></div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Medication Name</th>
+                <th>Date</th>
+                <th>UserName</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+</div>
+</div>
+<div class="row">
+<div id="chart_div2" class="col-xs-12 col-md-8" style="width: 900px; height: 500px;"></div>
+  <div class="col-xs-6 col-md-4" id="chart_div3" style="width:400px;"> 
+<br/>
+<br/>
+<br/>
+<br/>
+<table class="table">
+<thead>
+              <tr>
+		<th>#</th>
+                <th>Key Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Went to hackfest recently</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Angerness</td>
+              </tr>
+ </div>
+</div>
+</div>
 </body>
 </html>

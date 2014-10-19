@@ -23,3 +23,7 @@ body {
 .option-link:hover {
   cursor: pointer;
 }
+
+.container.ng-scope{
+  background-image: url('img/Splash Page.gif');
+}
